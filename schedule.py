@@ -27,7 +27,7 @@ class Schedule(commands.Cog):
 
     @commands.command()
     async def nextgame(self, ctx: commands.Context):
-        await ctx.send(f'## {self.matches[0][0]}\n{self.matches[0][1]}\n<t:{self.matches[0][2]}:F>, <t:{self.matches[0][2]}:R>')
+        await ctx.send(f'## {self.teams[self.matches[0][0]]}\n**{self.matches[0][1]}**\n<t:{self.matches[0][2]}:F>, <t:{self.matches[0][2]}:R>')
 
     @commands.command()
     @commands.is_owner()
