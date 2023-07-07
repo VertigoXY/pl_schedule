@@ -6,22 +6,28 @@ from discord.ext import commands
 def import_schedule(f: str, s: list):
     with open(f) as file:
         for line in file.readlines():
-            m = re.match(r"([a-zA-Z0-9 ]+: [a-zA-Z0-9 _-]+ vs [a-zA-Z0-9 ]+) ([0-9]+)", line)
+            m = re.match(r"([A-Z]{2}) ([a-zA-Z0-9 ]+: [a-zA-Z0-9 _-]+ vs [a-zA-Z0-9 ]+) ([0-9]+)", line)
             if m:
-                s.append(m.group(1, 2))
+                s.append(m.group(1, 2, 3))
 
 
 class Schedule(commands.Cog):
     matches = list()
+    teams = {
+        "HH": "Hellfire Heatrans vs Hyperspace Horrors",
+        "MR": "Metro Boomin' Megarays vs RPS Rhyperiors",
+        "DT": "Drive-by Dragapults vs Trigger-Happy Thwackeys",
+        "BP": "Big Baller Barraskewdas vs Playful Panchams"
+    }
 
     def __init__(self, bot: commands.Bot):
         self.bot = bot
         import_schedule("week1", self.matches)
-        self.matches = sorted(self.matches, key=lambda k: k[1])
+        self.matches = sorted(self.matches, key=lambda k: k[2])
 
     @commands.command()
     async def nextgame(self, ctx: commands.Context):
-        await ctx.send(f'The next game is {self.matches[0][0]}, on <t:{self.matches[0][1]}:F>.')
+        await ctx.send(f'## {self.matches[0][0]}\n{self.matches[0][1]}\n<t:{self.matches[0][2]}:F>, <t:{self.matches[0][2]}:R>')
 
     @commands.command()
     @commands.is_owner()
