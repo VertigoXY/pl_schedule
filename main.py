@@ -9,7 +9,7 @@ cogs = ["schedule"]
 
 async def setup_hook():
     for cog in cogs:
-        await bot.load_extension(f"cogs.{cog}")
+        await bot.load_extension(f"{cog}")
 
 bot.setup_hook = setup_hook
 
@@ -28,4 +28,4 @@ async def reload(ctx: commands.Context, cog: str):
     else:
         await ctx.send(f'Cog `{cog}` not found.')
 
-bot.run("MTEyNjYyMjM3ODk4MjY1MDAwNg.G8QadE.Ol4v2Jc4ge_d6A4HXLWHgNnIjheJPXnKSdKmis")
+bot.run("MTEyNjYyMjM3ODk4MjY1MDAwNg.GeVIns.PlR4zb9NvEeGiKxMiLOERq-4HPZjlGESOT9AUE")

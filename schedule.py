@@ -26,11 +26,12 @@ class Schedule(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def played(self, ctx: commands.Context):
+        self.matches.pop(0)
         await ctx.send(f'Most recent game removed. Use $nextgame to check what is the newest next game.')
 
     @commands.command()
     @commands.is_owner()
-    async def reload(self, ctx: commands.Context):
+    async def update(self, ctx: commands.Context):
         import_schedule("week1", self.matches)
         self.matches = sorted(self.matches, key=lambda k: k[1])
         await ctx.send(f'List of games updated.')
