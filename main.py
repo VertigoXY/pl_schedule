@@ -28,4 +28,4 @@ async def reload(ctx: commands.Context, cog: str):
     else:
         await ctx.send(f'Cog `{cog}` not found.')
 
-bot.run("MTEyNjYyMjM3ODk4MjY1MDAwNg.GeVIns.PlR4zb9NvEeGiKxMiLOERq-4HPZjlGESOT9AUE")
+bot.run("")
