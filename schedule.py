@@ -43,9 +43,9 @@ class Schedule(commands.Cog):
         self.matches.pop(0)
         await ctx.send(f'Most recent game removed. Use $nextgame to check what is the newest next game.')
 
-    @commands.command()
-    @is_authorized()
-    async def addgame(self, ctx: commands.Context, game: str):
+    # @commands.command()
+    # @is_authorized()
+    # async def addgame(self, ctx: commands.Context, game: str):
 
     @commands.command()
     @commands.is_owner()
