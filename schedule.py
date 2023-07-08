@@ -52,6 +52,7 @@ class Schedule(commands.Cog):
     @commands.command()
     @commands.is_owner()
     async def update(self, ctx: commands.Context):
+        self.matches = list()
         import_schedule("week1", self.matches)
         self.matches = sorted(self.matches, key=lambda k: k[2])
         await ctx.send(f'List of games updated.')
