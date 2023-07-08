@@ -6,7 +6,7 @@ from discord.ext import commands
 def import_schedule(f: str, s: list):
     with open(f) as file:
         for line in file.readlines():
-            m = re.match(r"([A-Z]{2}) ([a-zA-Z0-9 ]+: [a-zA-Z0-9 _-]+ vs [a-zA-Z0-9 ]+) ([0-9]+)", line)
+            m = re.match(r"([A-Z]{2}) ([a-zA-Z0-9 ]+: [a-zA-Z0-9 _-]+ vs [a-zA-Z0-9 _-]+) ([0-9]+)", line)
             if m:
                 s.append(m.group(1, 2, 3))
 
