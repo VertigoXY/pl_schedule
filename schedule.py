@@ -46,7 +46,7 @@ class Schedule(commands.Cog):
     async def allgames(self, ctx: commands.Context):
         text = ""
         for game in self.matches:
-            text += f"- {game[1]} <t:{game[2]}:F>"
+            text += f"- {game[1]} <t:{game[2]}:F>\n"
         await ctx.send(text)
 
     @commands.command()
