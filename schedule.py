@@ -34,8 +34,7 @@ class Schedule(commands.Cog):
 
     @commands.command()
     async def nextgame(self, ctx: commands.Context):
-        await ctx.send(
-            f'## {self.teams[self.matches[0][0]]}\n**{self.matches[0][1]}**\n<t:{self.matches[0][2]}:F>, <t:{self.matches[0][2]}:R>')
+        await ctx.send(f'## {self.teams[self.matches[0][0]]}\n**{self.matches[0][1]}**\n<t:{self.matches[0][2]}:F>, <t:{self.matches[0][2]}:R>')
 
     @commands.command()
     @commands.is_owner()
@@ -43,9 +42,12 @@ class Schedule(commands.Cog):
         self.matches.pop(0)
         await ctx.send(f'Most recent game removed. Use $nextgame to check what is the newest next game.')
 
-    # @commands.command()
-    # @is_authorized()
-    # async def addgame(self, ctx: commands.Context, game: str):
+    @commands.command()
+    async def allgames(self, ctx: commands.Context):
+        text = ""
+        for game in self.matches:
+            text += f"- {game[1]} <t:{game[2]}:F>"
+        await ctx.send(text)
 
     @commands.command()
     @commands.is_owner()
