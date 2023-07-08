@@ -11,6 +11,13 @@ def import_schedule(f: str, s: list):
                 s.append(m.group(1, 2, 3))
 
 
+def is_authorized():
+    async def predicate(ctx: commands.Context):
+        return ctx.author.id in [531226728991817738, 496970908922150913]
+
+    return commands.check(predicate)
+
+
 class Schedule(commands.Cog):
     matches = list()
     teams = {
@@ -27,7 +34,8 @@ class Schedule(commands.Cog):
 
     @commands.command()
     async def nextgame(self, ctx: commands.Context):
-        await ctx.send(f'## {self.teams[self.matches[0][0]]}\n**{self.matches[0][1]}**\n<t:{self.matches[0][2]}:F>, <t:{self.matches[0][2]}:R>')
+        await ctx.send(
+            f'## {self.teams[self.matches[0][0]]}\n**{self.matches[0][1]}**\n<t:{self.matches[0][2]}:F>, <t:{self.matches[0][2]}:R>')
 
     @commands.command()
     @commands.is_owner()
@@ -36,10 +44,14 @@ class Schedule(commands.Cog):
         await ctx.send(f'Most recent game removed. Use $nextgame to check what is the newest next game.')
 
     @commands.command()
+    @is_authorized()
+    async def addgame(self, ctx: commands.Context, game: str):
+
+    @commands.command()
     @commands.is_owner()
     async def update(self, ctx: commands.Context):
         import_schedule("week1", self.matches)
-        self.matches = sorted(self.matches, key=lambda k: k[1])
+        self.matches = sorted(self.matches, key=lambda k: k[2])
         await ctx.send(f'List of games updated.')
 
 
