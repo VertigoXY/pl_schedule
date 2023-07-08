@@ -22,8 +22,8 @@ async def on_ready():
 @bot.command()
 @commands.is_owner()
 async def reload(ctx: commands.Context, cog: str):
-    if f'cogs.{cog}' in ctx.bot.extensions:
-        await ctx.bot.reload_extension(f'cogs.{cog}')
+    if f'{cog}' in ctx.bot.extensions:
+        await ctx.bot.reload_extension(f'{cog}')
         await ctx.send(f'Reloaded cog `{cog}`')
     else:
         await ctx.send(f'Cog `{cog}` not found.')
