@@ -14,7 +14,6 @@ def import_schedule(f: str, s: list):
 def is_authorized():
     async def predicate(ctx: commands.Context):
         return ctx.author.id in [531226728991817738, 496970908922150913]
-
     return commands.check(predicate)
 
 
@@ -36,11 +35,18 @@ class Schedule(commands.Cog):
     async def nextgame(self, ctx: commands.Context):
         await ctx.send(f'## {self.teams[self.matches[0][0]]}\n**{self.matches[0][1]}**\n<t:{self.matches[0][2]}:F>, <t:{self.matches[0][2]}:R>')
 
-    @commands.command()
-    @commands.is_owner()
-    async def played(self, ctx: commands.Context):
-        self.matches.pop(0)
-        await ctx.send(f'Most recent game removed. Use $nextgame to check what is the newest next game.')
+    # @commands.command()
+    # @commands.is_owner()
+    # async def addgames(self, ctx: commands.Context, *, games: str):
+    #     games = games.strip("```\n").split('\n')
+    #     for game in games:
+    #         m = re.match(r"([A-Z]{2}) ([a-zA-Z0-9 ]+: [a-zA-Z0-9 _-]+ vs [a-zA-Z0-9 _-]+) ([0-9]+)", game)
+    #         if m:
+    #             self.matches.append(m.group(1, 2, 3))
+    #         else:
+    #             await ctx.send(f"Format non recognized: `{game}`")
+    #             return
+    #     await ctx.send("Games added. Use $allgames to check the list.")
 
     @commands.command()
     async def allgames(self, ctx: commands.Context):
