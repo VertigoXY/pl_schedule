@@ -11,19 +11,17 @@ def import_schedule(f: str, s: list):
                 s.append(m.group(1, 2, 3))
 
 
-def is_authorized():
-    async def predicate(ctx: commands.Context):
-        return ctx.author.id in [531226728991817738, 496970908922150913]
-    return commands.check(predicate)
-
-
 class Schedule(commands.Cog):
     matches = list()
     teams = {
-        "HH": "Hellfire Heatrans vs Hyperspace Horrors",
-        "MR": "Metro Boomin' Megarays vs RPS Rhyperiors",
-        "DT": "Drive-by Dragapults vs Trigger-Happy Thwackeys",
-        "BP": "Big Baller Barraskewdas vs Playful Panchams"
+        "H": "Hellfire Heatrans",
+        "R": "RPS Rhyperiors",
+        "P": "Playful Panchams",
+        "M": "Metro Boomin' Megarays",
+        "D": "Drive-by Dragapults",
+        "B": "Big Baller Barraskewdas",
+        "T": "Trigger-Happy Thwackeys",
+        "U": "Hyperspace Horrors"
     }
 
     def __init__(self, bot: commands.Bot):
@@ -33,23 +31,27 @@ class Schedule(commands.Cog):
 
     @commands.command()
     async def nextgame(self, ctx: commands.Context):
-        await ctx.send(f'## {self.teams[self.matches[0][0]]}\n**{self.matches[0][1]}**\n<t:{self.matches[0][2]}:F>, <t:{self.matches[0][2]}:R>')
+        """Displays the next scheduled game."""
+        await ctx.send(
+            f'## {self.teams[self.matches[0][0][0]]} vs {self.teams[self.matches[0][0][1]]}\n**{self.matches[0][1]}**\n<t:{self.matches[0][2]}:F>, <t:{self.matches[0][2]}:R>')
 
-    # @commands.command()
-    # @commands.is_owner()
-    # async def addgames(self, ctx: commands.Context, *, games: str):
-    #     games = games.strip("```\n").split('\n')
-    #     for game in games:
-    #         m = re.match(r"([A-Z]{2}) ([a-zA-Z0-9 ]+: [a-zA-Z0-9 _-]+ vs [a-zA-Z0-9 _-]+) ([0-9]+)", game)
-    #         if m:
-    #             self.matches.append(m.group(1, 2, 3))
-    #         else:
-    #             await ctx.send(f"Format non recognized: `{game}`")
-    #             return
-    #     await ctx.send("Games added. Use $allgames to check the list.")
+    @commands.command()
+    @commands.is_owner()
+    async def addgames(self, ctx: commands.Context, *, games: str):
+        games = games.strip("```\n").split('\n')
+        for game in games:
+            m = re.match(r"([A-Z]{2}) ([a-zA-Z0-9 ]+: [a-zA-Z0-9 _-]+ vs [a-zA-Z0-9 _-]+) ([0-9]+)", game)
+            if m:
+                self.matches.append(m.group(1, 2, 3))
+            else:
+                await ctx.send(f"Format non recognized: `{game}`")
+                return
+        self.matches = sorted(self.matches, key=lambda k: k[2])
+        await ctx.send("Games added. Use $allgames to check the list.")
 
     @commands.command()
     async def allgames(self, ctx: commands.Context):
+        """Displays all the upcoming scheduled games."""
         text = ""
         for game in self.matches:
             text += f"- {game[1]} <t:{game[2]}:F>\n"
