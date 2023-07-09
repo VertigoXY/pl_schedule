@@ -50,6 +50,13 @@ class Schedule(commands.Cog):
         await ctx.send("Games added. Use $allgames to check the list.")
 
     @commands.command()
+    @commands.is_owner()
+    async def removegame(self, ctx: commands.Context, index: int):
+        game = self.matches.pop(index-1)
+        self.matches = sorted(self.matches, key=lambda k: k[2])
+        await ctx.send(f"Game removed: {game[1]}.")
+
+    @commands.command()
     async def allgames(self, ctx: commands.Context):
         """Displays all the upcoming scheduled games."""
         text = ""
