@@ -29,6 +29,9 @@ class Schedule(commands.Cog):
         import_schedule("week1", self.matches)
         self.matches = sorted(self.matches, key=lambda k: k[2])
 
+    async def auth(ctx: commands.Context):
+        return ctx.author.id in [199748393721921537, 531226728991817738]
+
     @commands.command()
     async def nextgame(self, ctx: commands.Context):
         """Displays the next scheduled game."""
@@ -36,7 +39,7 @@ class Schedule(commands.Cog):
             f'## {self.teams[self.matches[0][0][0]]} vs {self.teams[self.matches[0][0][1]]}\n**{self.matches[0][1]}**\n<t:{self.matches[0][2]}:F>, <t:{self.matches[0][2]}:R>')
 
     @commands.command()
-    @commands.is_owner()
+    @commands.check(auth)
     async def addgames(self, ctx: commands.Context, *, games: str):
         games = games.strip("```\n").split('\n')
         for game in games:
@@ -50,7 +53,7 @@ class Schedule(commands.Cog):
         await ctx.send("Games added. Use $allgames to check the list.")
 
     @commands.command()
-    @commands.is_owner()
+    @commands.check(auth)
     async def removegame(self, ctx: commands.Context, index: int):
         game = self.matches.pop(index-1)
         self.matches = sorted(self.matches, key=lambda k: k[2])

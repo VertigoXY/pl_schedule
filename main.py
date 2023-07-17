@@ -2,7 +2,6 @@ import discord
 from discord import Intents, Status
 from discord.ext import commands
 
-
 bot = commands.Bot(command_prefix='$', intents=Intents.all(), status=Status.dnd)
 cogs = ["schedule"]
 
