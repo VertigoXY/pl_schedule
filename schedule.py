@@ -26,8 +26,6 @@ class Schedule(commands.Cog):
 
     def __init__(self, bot: commands.Bot):
         self.bot = bot
-        import_schedule("week1", self.matches)
-        self.matches = sorted(self.matches, key=lambda k: k[2])
         self.deadline = ''
 
     @staticmethod
