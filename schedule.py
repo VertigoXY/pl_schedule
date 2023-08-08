@@ -28,7 +28,9 @@ class Schedule(commands.Cog):
         self.bot = bot
         import_schedule("week1", self.matches)
         self.matches = sorted(self.matches, key=lambda k: k[2])
+        self.deadline = ''
 
+    @staticmethod
     async def auth(ctx: commands.Context):
         return ctx.author.id in [199748393721921537, 531226728991817738]
 
@@ -55,7 +57,7 @@ class Schedule(commands.Cog):
     @commands.command()
     @commands.check(auth)
     async def removegame(self, ctx: commands.Context, index: int):
-        game = self.matches.pop(index-1)
+        game = self.matches.pop(index - 1)
         self.matches = sorted(self.matches, key=lambda k: k[2])
         await ctx.send(f"Game removed: {game[1]}.")
 
@@ -65,7 +67,18 @@ class Schedule(commands.Cog):
         text = ""
         for game in self.matches:
             text += f"- {game[1]} <t:{game[2]}:F>\n"
+        text += f"- **DEADLINE** <t:{self.deadline}:F>\n"
         await ctx.send(text)
+
+    @commands.command()
+    @commands.is_owner()
+    async def setdeadline(self, ctx: commands.Context, deadline: str):
+        self.deadline = deadline
+        await ctx.send(f"Deadline set. The deadline is <t:{deadline}:F>.")
+
+    @commands.command()
+    async def deadline(self, ctx: commands.Context):
+        await ctx.send(f"**Deadline :** <t:{self.deadline}:F>")
 
     @commands.command()
     @commands.is_owner()
